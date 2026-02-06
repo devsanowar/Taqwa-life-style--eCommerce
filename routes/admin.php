@@ -6,6 +6,7 @@ use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SocialIconController;
@@ -74,6 +75,15 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         Route::get('brands/edit/{id}', [ProductBrandController::class, 'edit'])->name('admin.product.brand.edit');
         Route::post('brands/update/{id}', [ProductBrandController::class, 'update'])->name('admin.product.brand.update');
         Route::delete('brands/delete/{id}', [ProductBrandController::class, 'destroy'])->name('admin.product.brand.destroy');
+
+        // Product route here
+        Route::get('/', [ProductController::class, 'index'])->name('admin.product.index');
+        Route::get('/create', [ProductController::class, 'create'])->name('admin.product.create');
+        Route::post('/store', [ProductController::class, 'store'])->name('admin.product.store');
+        Route::get('/edit/{id}', [ProductController::class, 'edit'])->name('admin.product.edit');
+        Route::put('/update/{id}', [ProductController::class, 'update'])->name('admin.product.update');
+        Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
+
     });
 
 

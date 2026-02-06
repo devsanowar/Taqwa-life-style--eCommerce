@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
-@section('title', 'All Categories')
+@section('title', 'All Products')
+
 @push('styles')
 <link href="{{ asset('backend') }}/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 @endpush
@@ -11,9 +12,9 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
-                        <h5>All Categories</h5>
-                        <a href="{{ route('admin.product.category.create') }}"
-                            class="btn btn-outline-primary px-5 rounded-0">Add Category</a>
+                        <h5>All Products</h5>
+                        <a href="{{ route('admin.product.create') }}" class="btn btn-outline-primary px-5 rounded-0">Add
+                            Product</a>
                     </div>
                 </div>
 
@@ -25,54 +26,75 @@
                                     <th>S/N</th>
                                     <th>Image</th>
                                     <th>Name</th>
-                                    <th>Parent</th>
+                                    <th>Category</th>
+                                    <th>Brand</th>
+                                    <th>Price</th>
+                                    <th>Discount</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($categories as $key => $cat)
+                                @foreach ($products as $key => $product)
                                 <tr>
                                     <td>{{ $key+1 }}</td>
+
+                                    {{-- Primary Image --}}
                                     <td>
-                                        @if($cat->image)
-                                        <img src="{{ asset('storage/'.$cat->image) }}" width="50">
+                                        @if($product->primaryImage)
+                                        <img src="{{ asset($product->primaryImage->path) }}" width="50">
                                         @else
                                         -
                                         @endif
                                     </td>
-                                    <td>{{ $cat->name }}</td>
-                                    <td>{{ $cat->parent->name ?? '-' }}</td>
+
+                                    <td>{{ $product->name }}</td>
+                                    <td>{{ $product->category->name ?? '-' }}</td>
+                                    <td>{{ $product->brand->name ?? '-' }}</td>
+
+                                    <td>৳ {{ number_format($product->base_price,2) }}</td>
+
+                                    <td>
+                                        @if($product->discount_type)
+                                        {{ $product->discount_value }}
+                                        ({{ ucfirst($product->discount_type) }})
+                                        @else
+                                        -
+                                        @endif
+                                    </td>
+
                                     <td class="text-center">
-                                        @if($cat->status)
+                                        @if($product->status)
                                         <span class="badge bg-success">Active</span>
                                         @else
                                         <span class="badge bg-danger">Inactive</span>
                                         @endif
                                     </td>
+
                                     <td class="text-center">
 
-                                        <a href="{{ route('admin.product.category.edit',$cat->id) }}"
+                                        <a href="{{ route('admin.product.edit',$product->id) }}"
                                             class="action-icon border border-primary text-primary me-2">
                                             <i class="bx bx-edit"></i>
                                         </a>
 
-                                        <form action="{{ route('admin.product.category.destroy',$cat->id) }}"
-                                            method="POST" class="deleteMenuForm" style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="button"
-                                                class="action-icon border border-danger text-danger deleteBtn"
-                                                data-id="{{ $cat->id }}">
-                                                <i class="bx bx-trash"></i>
-                                            </button>
-                                        </form>
+                                        <button type="button"
+                                            class="action-icon border border-danger text-danger deleteBtn"
+                                            data-id="{{ $product->id }}">
+                                            <i class="bx bx-trash"></i>
+                                        </button>
 
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
+                        {{-- Laravel pagination (optional if not using DataTable paging) --}}
+                        <div class="mt-3">
+                            {{ $products->links() }}
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -88,13 +110,6 @@
 
 <script>
     $(document).ready(function() {
-    $('#example').DataTable();
-});
-</script>
-
-<script>
-$(document).ready(function() {
-    // Initialize DataTable
     var table = $('#example').DataTable();
 
     $(document).on('click', '.deleteBtn', function() {
@@ -104,7 +119,7 @@ $(document).ready(function() {
 
         Swal.fire({
             title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            text: "This product will be deleted permanently!",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -114,7 +129,7 @@ $(document).ready(function() {
         }).then((result) => {
             if(result.isConfirmed){
                 $.ajax({
-                    url: '/admin/product/categories/' + id,
+                    url: '/admin/product/delete/' + id,
                     type: 'POST',
                     data: {
                         _method: 'DELETE',
@@ -124,11 +139,11 @@ $(document).ready(function() {
                         if(res.status === 'success'){
                             toastr.success(res.message);
 
-                            // 🔹 Remove row from DataTable
+                            // Remove row
                             table.row(row).remove().draw(false);
 
-                            // If you need custom numbering:
-                            table.rows().every(function(rowIdx, tableLoop, rowLoop){
+                            // Re-number S/N
+                            table.rows().every(function(rowIdx){
                                 this.cell(rowIdx, 0).data(rowIdx + 1);
                             });
                             table.draw(false);
@@ -145,7 +160,5 @@ $(document).ready(function() {
         });
     });
 });
-
 </script>
-
 @endpush
