@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\SocialIconController;
 use App\Http\Controllers\Admin\PostCategoryController;
+use App\Http\Controllers\Admin\ProductBrandController;
 use App\Http\Controllers\Admin\ThemeCustomerController;
 use App\Http\Controllers\Admin\WebsiteSettingController;
 use App\Http\Controllers\Admin\ProductCategoryController;
@@ -59,13 +60,20 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     });
 
     // Product Route here
-    Route::prefix('product')->middleware(['auth','verified'])->group(function () {
-        Route::get('categories', [ProductCategoryController::class,'index'])->name('admin.product.category.index');
-        Route::get('categories/create', [ProductCategoryController::class,'create'])->name('admin.product.category.create');
-        Route::post('categories', [ProductCategoryController::class,'store'])->name('admin.product.category.store');
-        Route::get('categories/{id}/edit', [ProductCategoryController::class,'edit'])->name('admin.product.category.edit');
-        Route::put('categories/{id}', [ProductCategoryController::class,'update'])->name('admin.product.category.update');
-        Route::delete('categories/{id}', [ProductCategoryController::class,'destroy'])->name('admin.product.category.destroy');
+    Route::prefix('product')->middleware(['auth', 'verified'])->group(function () {
+        Route::get('categories', [ProductCategoryController::class, 'index'])->name('admin.product.category.index');
+        Route::get('categories/create', [ProductCategoryController::class, 'create'])->name('admin.product.category.create');
+        Route::post('categories', [ProductCategoryController::class, 'store'])->name('admin.product.category.store');
+        Route::get('categories/{id}/edit', [ProductCategoryController::class, 'edit'])->name('admin.product.category.edit');
+        Route::put('categories/{id}', [ProductCategoryController::class, 'update'])->name('admin.product.category.update');
+        Route::delete('categories/{id}', [ProductCategoryController::class, 'destroy'])->name('admin.product.category.destroy');
+
+        // Product brand route here
+        Route::get('brands', [ProductBrandController::class, 'index'])->name('admin.product.brand.index');
+        Route::post('brands/store', [ProductBrandController::class, 'store'])->name('admin.product.brand.store');
+        Route::get('brands/edit/{id}', [ProductBrandController::class, 'edit'])->name('admin.product.brand.edit');
+        Route::post('brands/update/{id}', [ProductBrandController::class, 'update'])->name('admin.product.brand.update');
+        Route::delete('brands/delete/{id}', [ProductBrandController::class, 'destroy'])->name('admin.product.brand.destroy');
     });
 
 

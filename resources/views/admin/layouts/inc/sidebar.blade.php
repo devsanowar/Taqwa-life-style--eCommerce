@@ -29,6 +29,9 @@
                 <li> <a href="{{ route('admin.product.category.index') }}"><i class="bx bx-radio-circle"></i>Categories</a>
                 </li>
 
+                <li> <a href="{{ route('admin.product.brand.index') }}"><i class="bx bx-radio-circle"></i>Brands</a>
+                </li>
+
             </ul>
         </li>
 
