@@ -262,7 +262,9 @@ $(document).ready(function() {
             success: function(res){
                 if(res.status === 'success'){
                     toastr.success(res.message);
-                    // Optional: refresh page or update table row dynamically
+                    setTimeout(() =>{
+                        window.location.href = "{{ route('admin.product.index') }}";
+                    }, 1500);
                 } else {
                     toastr.error('Something went wrong');
                 }
