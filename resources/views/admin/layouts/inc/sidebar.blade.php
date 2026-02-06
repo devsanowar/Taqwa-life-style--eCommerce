@@ -21,7 +21,7 @@
 
         <li>
             <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="bx bx-repeat"></i>
+                <div class="parent-icon"><i class="bx bx-box"></i>
                 </div>
                 <div class="menu-title">Products</div>
             </a>
@@ -33,6 +33,24 @@
                 </li>
 
                 <li> <a href="{{ route('admin.product.index') }}"><i class="bx bx-radio-circle"></i>Products</a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bx bx-layer"></i>
+                </div>
+                <div class="menu-title">Variants</div>
+            </a>
+            <ul class="mm-collapse">
+                <li> <a href="{{ route('admin.product.attribute.index') }}"><i class="bx bx-radio-circle"></i>Attributes</a>
+                </li>
+
+                <li> <a href="{{ route('admin.product.attribute_value.index') }}"><i class="bx bx-radio-circle"></i>Attribute Values</a>
+                </li>
+
+                <li> <a href="{{ route('admin.product.variants.index') }}"><i class="bx bx-radio-circle"></i>Variants</a>
                 </li>
 
             </ul>
