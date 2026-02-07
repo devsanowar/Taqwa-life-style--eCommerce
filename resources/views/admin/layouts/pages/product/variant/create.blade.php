@@ -10,16 +10,14 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5>Add Variant</h5>
-                        <a href="{{ route('admin.product.index') }}" class="btn btn-outline-primary px-5 rounded-0">All
-                            Products</a>
-                        <a href="{{ route('admin.product.variants.index') }}" class="btn btn-outline-primary px-5 rounded-0">All
-                            Variants</a>
+                        <a href="{{ route('admin.product.index') }}" class="btn btn-outline-primary px-5 rounded-0">All Products</a>
+                        <a href="{{ route('admin.product.variants.index') }}" class="btn btn-outline-primary px-5 rounded-0">All Variants</a>
                     </div>
                 </div>
 
                 <div class="card-body p-4">
 
-                    <form id="addVariantForm">
+                    <form id="addVariantForm" enctype="multipart/form-data">
                         @csrf
 
                         {{-- Product --}}
@@ -29,7 +27,7 @@
                                 <select class="form-select" name="product_id" required>
                                     <option value="">-- Select Product --</option>
                                     @foreach($products as $p)
-                                    <option value="{{ $p->id }}">{{ $p->name }}</option>
+                                        <option value="{{ $p->id }}">{{ $p->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -45,7 +43,7 @@
 
                         {{-- Price Override --}}
                         <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Price Override</label>
+                            <label class="col-sm-3 col-form-label">Base Price Override</label>
                             <div class="col-sm-9">
                                 <input type="number" step="0.01" class="form-control" name="price_override">
                                 <small class="text-muted">Leave empty to use product base price</small>
@@ -56,29 +54,33 @@
                         @foreach($attributes as $attr)
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">{{ $attr->name }}</label>
-                            <div class="col-sm-9 d-flex flex-wrap gap-2">
-
+                            <div class="col-sm-9">
                                 @foreach($attr->values as $val)
-                                <div class="form-check me-3">
-                                    <input class="form-check-input" type="checkbox" name="attributes[{{ $attr->id }}][]"
-                                        value="{{ $val->id }}">
-                                    <label class="form-check-label">
-                                        {{ $val->value }}
-                                    </label>
+                                <div class="d-flex align-items-center mb-2 border p-2 rounded">
+
+                                    <div class="form-check me-3">
+                                        <input class="form-check-input attrCheck" type="checkbox"
+                                            data-value="{{ $val->id }}" data-attr="{{ $attr->id }}">
+                                        <label class="form-check-label">{{ $val->value }}</label>
+                                    </div>
+
+                                    {{-- Color Image Upload --}}
+                                    @if($attr->code == 'color')
+                                    <input type="file" class="form-control w-50" name="color_images[{{ $val->id }}]" accept="image/*">
+                                    @endif
+
+                                    {{-- Price Input for size/weight attributes --}}
+                                    @if($attr->code != 'color')
+                                    <input type="hidden" name="prices[{{ $val->id }}]" value="">
+                                    <input type="number" step="0.01" class="form-control w-25 d-none priceInput"
+                                        data-hidden="prices[{{ $val->id }}]" placeholder="Extra Price">
+                                    @endif
+
                                 </div>
                                 @endforeach
-
                             </div>
                         </div>
                         @endforeach
-
-                        {{-- Variant Image --}}
-                        <div class="row mb-3">
-                            <label class="col-sm-3 col-form-label">Variant Image</label>
-                            <div class="col-sm-9">
-                                <input type="file" class="form-control" name="image">
-                            </div>
-                        </div>
 
                         {{-- Status --}}
                         <div class="row mb-3">
@@ -113,7 +115,27 @@
 
 @push('scripts')
 <script>
-    $(document).on('submit','#addVariantForm',function(e){
+$(document).on('change','.attrCheck',function(){
+    let row = $(this).closest('.d-flex');
+    let visible = row.find('.priceInput');
+    let hiddenName = visible.data('hidden');
+    let hidden = row.find('input[name="'+hiddenName+'"]');
+
+    if(this.checked){
+        if(visible.length) visible.removeClass('d-none');
+        if(hidden.length) hidden.val(0);
+    } else {
+        if(visible.length) visible.addClass('d-none').val('');
+        if(hidden.length) hidden.val('');
+    }
+});
+
+$(document).on('input','.priceInput',function(){
+    let hiddenName = $(this).data('hidden');
+    $('input[name="'+hiddenName+'"]').val($(this).val());
+});
+
+$(document).on('submit','#addVariantForm',function(e){
     e.preventDefault();
     let formData = new FormData(this);
 
@@ -145,7 +167,5 @@
         }
     });
 });
-
-
 </script>
 @endpush

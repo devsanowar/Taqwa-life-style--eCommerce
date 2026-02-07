@@ -87,13 +87,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         Route::put('/update/{id}', [ProductController::class, 'update'])->name('admin.product.update');
         Route::delete('/delete/{id}', [ProductController::class, 'destroy'])->name('admin.product.destroy');
 
-        // Product variant route here
-        Route::get('/variants', [ProductVariantController::class, 'index'])->name('admin.product.variants.index');
-        Route::get('/variants/create', [ProductVariantController::class, 'create'])->name('admin.product.variants.create');
-        Route::post('/variants/store', [ProductVariantController::class, 'storeAttribute'])->name('admin.product.variants.store');
-        Route::get('/variants/edit/{id}', [ProductVariantController::class, 'editAttribute'])->name('admin.product.variants.edit');
-        Route::post('/variants/update/{id}', [ProductVariantController::class, 'updateAttribute'])->name('admin.product.variants.update');
-        Route::delete('/variants/delete/{id}', [ProductVariantController::class, 'destroyAttribute'])->name('admin.product.variants.destroy');
+
 
         // Atribute route here
         Route::get('attributes', [AttributeController::class, 'index'])->name('admin.product.attribute.index');
@@ -110,6 +104,15 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         Route::get('attribute-values/{id}/edit', [AttributeValueController::class, 'edit'])->name('admin.product.attribute_value.edit');
         Route::put('attribute-values/{id}', [AttributeValueController::class, 'update'])->name('admin.product.attribute_value.update');
         Route::delete('attribute-values/{id}', [AttributeValueController::class, 'destroy'])->name('admin.product.attribute_value.destroy');
+
+
+        // Product variant route here
+        Route::get('/variants', [ProductVariantController::class, 'index'])->name('admin.product.variants.index');
+        Route::get('/variants/create', [ProductVariantController::class, 'create'])->name('admin.product.variants.create');
+        Route::post('/variants/store', [ProductVariantController::class, 'storeAttribute'])->name('admin.product.variants.store');
+        Route::get('/variants/edit/{id}', [ProductVariantController::class, 'editAttribute'])->name('admin.product.variants.edit');
+        Route::post('/variants/update/{id}', [ProductVariantController::class, 'updateAttribute'])->name('admin.product.variants.update');
+        Route::delete('/variants/delete/{id}', [ProductVariantController::class, 'destroyAttribute'])->name('admin.product.variants.destroy');
 
     });
 

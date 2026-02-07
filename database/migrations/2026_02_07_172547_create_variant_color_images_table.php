@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('variant_values', function (Blueprint $table) {
+        Schema::create('variant_color_images', function (Blueprint $table) {
             $table->id();
             $table->foreignId('variant_id')->constrained('product_variants')->cascadeOnDelete();
-            $table->foreignId('attribute_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('attribute_value_id')->constrained()->cascadeOnDelete();
-
-            $table->unique(['variant_id','attribute_value_id']);
+            $table->foreignId('attribute_value_id')->constrained('attribute_values')->cascadeOnDelete(); // color value
+            $table->string('image_path');
+            $table->timestamps();
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('variant_values');
+        Schema::dropIfExists('variant_color_images');
     }
 };

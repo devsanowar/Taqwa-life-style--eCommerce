@@ -8,7 +8,7 @@ class ProductVariant extends Model
 {
     protected $guarded = ['id'];
 
-    public function product(){
+   public function product(){
         return $this->belongsTo(Product::class);
     }
 
@@ -16,4 +16,14 @@ class ProductVariant extends Model
         return $this->belongsToMany(AttributeValue::class, 'variant_values', 'variant_id', 'attribute_value_id')
             ->withPivot('attribute_id');
     }
+
+    public function valuePrices(){
+        return $this->hasMany(VariantPriceValue::class, 'variant_id');
+    }
+
+    public function colorImages(){
+        return $this->hasMany(VariantColorImage::class, 'variant_id');
+    }
+
+
 }

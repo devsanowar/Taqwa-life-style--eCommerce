@@ -8,6 +8,8 @@ class VariantValue extends Model
 {
     protected $guarded = ['id'];
 
+    public $timestamps = false;
+
     public function attribute()
     {
         return $this->belongsTo(Attribute::class);
