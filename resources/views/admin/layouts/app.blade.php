@@ -8,7 +8,11 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
 	<!--favicon-->
-	<link rel="icon" href="{{ asset('backend') }}/assets/images/favicon-32x32.png" type="image/png"/>
+    @if($website_setting->website_favicon)
+	<link rel="icon" href="{{ asset($website_setting->website_favicon) }}" type="image/png"/>
+    @else
+    <link rel="icon" href="{{ asset('backend') }}/assets/images/favicon-32x32.png" type="image/png"/>
+    @endif
 	<!--plugins-->
 	<title>@yield('title')</title>
 

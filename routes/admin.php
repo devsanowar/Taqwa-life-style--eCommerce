@@ -1,23 +1,25 @@
 <?php
 
-use App\Models\ProductCategory;
-
-
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\MenuController;
-use App\Http\Controllers\Admin\PostController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\AttributeController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\SocialIconController;
-use App\Http\Controllers\Admin\PostCategoryController;
-use App\Http\Controllers\Admin\ProductBrandController;
-use App\Http\Controllers\Admin\ThemeCustomerController;
 use App\Http\Controllers\Admin\AttributeValueController;
-use App\Http\Controllers\Admin\ProductVariantController;
-use App\Http\Controllers\Admin\WebsiteSettingController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FlashSaleController;
+use App\Http\Controllers\Admin\FlashSaleItemController;
+use App\Http\Controllers\Admin\MenuController;
+use App\Http\Controllers\Admin\PostCategoryController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ProductBrandController;
 use App\Http\Controllers\Admin\ProductCategoryController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductReviewController;
+use App\Http\Controllers\Admin\ProductVariantController;
+use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\SliderController;
+use App\Http\Controllers\Admin\SocialIconController;
+use App\Http\Controllers\Admin\ThemeCustomerController;
+use App\Http\Controllers\Admin\WebsiteSettingController;
+use App\Http\Controllers\InventoryController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
 
@@ -64,7 +66,7 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
     });
 
     // Product Route here
-    Route::prefix('product')->middleware(['auth', 'verified'])->group(function () {
+    Route::prefix('product')->group(function () {
         Route::get('categories', [ProductCategoryController::class, 'index'])->name('admin.product.category.index');
         Route::get('categories/create', [ProductCategoryController::class, 'create'])->name('admin.product.category.create');
         Route::post('categories', [ProductCategoryController::class, 'store'])->name('admin.product.category.store');
@@ -109,11 +111,52 @@ Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
         // Product variant route here
         Route::get('/variants', [ProductVariantController::class, 'index'])->name('admin.product.variants.index');
         Route::get('/variants/create', [ProductVariantController::class, 'create'])->name('admin.product.variants.create');
-        Route::post('/variants/store', [ProductVariantController::class, 'storeAttribute'])->name('admin.product.variants.store');
-        Route::get('/variants/edit/{id}', [ProductVariantController::class, 'editAttribute'])->name('admin.product.variants.edit');
-        Route::post('/variants/update/{id}', [ProductVariantController::class, 'updateAttribute'])->name('admin.product.variants.update');
-        Route::delete('/variants/delete/{id}', [ProductVariantController::class, 'destroyAttribute'])->name('admin.product.variants.destroy');
+        Route::post('/variants/store', [ProductVariantController::class, 'storeVariant'])->name('admin.product.variants.store');
+        Route::get('/variants/edit/{id}', [ProductVariantController::class, 'editVariant'])->name('admin.product.variants.edit');
+        Route::put('/variants/update/{id}', [ProductVariantController::class, 'updateVariant'])->name('admin.product.variants.update');
+        Route::delete('/variants/delete/{id}', [ProductVariantController::class, 'destroyVariant'])->name('admin.product.variants.destroy');
 
+        // Flash Sale route here
+        Route::get('flash-sales/', [FlashSaleController::class, 'index'])->name('admin.flash_sales.index');
+        Route::get('flash-sales/create', [FlashSaleController::class, 'create'])->name('admin.flash_sales.create');
+        Route::post('flash-sales/store', [FlashSaleController::class, 'store'])->name('admin.flash_sales.store');
+        Route::get('flash-sales/edit/{id}', [FlashSaleController::class, 'edit'])->name('admin.flash_sales.edit');
+        Route::post('flash-sales/update/{id}', [FlashSaleController::class, 'update'])->name('admin.flash_sales.update');
+        Route::delete('flash-sales/delete/{id}', [FlashSaleController::class, 'destroy'])->name('admin.flash_sales.destroy');
+
+        // Flash sale item route here
+        Route::get('/flash-sales/items', [FlashSaleItemController::class, 'index'])->name('admin.flash_sale_items.index');
+        Route::get('/flash-sales/items/create', [FlashSaleItemController::class, 'create'])->name('admin.flash_sale_items.create');
+        Route::post('/flash-items/store', [FlashSaleItemController::class, 'store'])->name('admin.flash_sale_items.store');
+        Route::get('/flash-items/edit/{item}', [FlashSaleItemController::class, 'edit'])->name('admin.flash_sale_items.edit');
+        Route::post('/flash-items/update/{item}', [FlashSaleItemController::class, 'update'])->name('admin.flash_sale_items.update');
+        Route::delete('/flash-items/delete/{item}', [FlashSaleItemController::class, 'destroy'])->name('admin.flash_sale_items.delete');
+
+
+        Route::prefix('inventory')->group(function () {
+
+            Route::post('/reserve', [InventoryController::class, 'reserve']);
+            Route::post('/commit', [InventoryController::class, 'commit']);
+            Route::post('/release', [InventoryController::class, 'release']);
+        });
+
+        Route::prefix('review')->name('admin.product.')->group(function () {
+            Route::get('/', [ProductReviewController::class, 'index'])->name('review.index');
+            Route::get('/create', [ProductReviewController::class, 'create'])->name('review.create');
+            Route::post('/store', [ProductReviewController::class, 'store'])->name('review.store');
+            Route::get('/edit/{id}', [ProductReviewController::class, 'edit'])->name('review.edit');
+            Route::put('/update/{id}', [ProductReviewController::class, 'update'])->name('review.update');
+            Route::put('/delete/{id}', [ProductReviewController::class, 'destroy'])->name('review.destroy');
+        });
+    });
+
+    Route::prefix('home')->name('admin.home.')->group(function () {
+        Route::get('slider', [SliderController::class, 'index'])->name('slider.index');
+        Route::get('slider/create', [SliderController::class, 'create'])->name('slider.create');
+        Route::post('slider/store', [SliderController::class, 'store'])->name('slider.store');
+        Route::get('slider/edit/{id}', [SliderController::class, 'edit'])->name('slider.edit');
+        Route::put('slider/update/{id}', [SliderController::class, 'update'])->name('slider.update');
+        Route::delete('slider/delete/{id}', [SliderController::class, 'destroy'])->name('slider.destroy');
     });
 
 

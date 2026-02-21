@@ -109,7 +109,7 @@
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Meta Title</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="meta_title" placeholder="SEO title" value="{{ $post->seo->meta_title }}">
+                                <input type="text" class="form-control" name="meta_title" placeholder="SEO title" value="{{ $post->seo->meta_title ?? '' }}">
                             </div>
                         </div>
 
@@ -118,7 +118,7 @@
                             <label class="col-sm-3 col-form-label">Meta Keywords</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control" name="meta_keywords"
-                                    placeholder="keyword1, keyword2" value="{{ $post->seo->meta_keywords }}">
+                                    placeholder="keyword1, keyword2" value="{{ $post->seo->meta_keywords ?? '' }}">
                             </div>
                         </div>
 
@@ -127,7 +127,7 @@
                             <label class="col-sm-3 col-form-label">Meta Description</label>
                             <div class="col-sm-9">
                                 <textarea class="form-control" name="meta_description" rows="3"
-                                    placeholder="SEO description">{!! $post->seo->meta_description !!}</textarea>
+                                    placeholder="SEO description">{!! $post->seo->meta_description ?? '' !!}</textarea>
                             </div>
                         </div>
 

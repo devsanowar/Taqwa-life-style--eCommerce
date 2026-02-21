@@ -39,4 +39,21 @@ class Product extends Model
     {
         return $this->hasMany(ProductVariant::class);
     }
+
+    // Product search suggestion
+    protected $appends = ['final_price'];
+    public function getFinalPriceAttribute()
+    {
+        if ($this->flash_sale_enabled) {
+            if ($this->discount_type === 'percent') {
+                return round($this->base_price - ($this->base_price * $this->discount_value / 100), 2);
+            }
+
+            if ($this->discount_type === 'fixed') {
+                return round($this->base_price - $this->discount_value, 2);
+            }
+        }
+
+        return $this->base_price;
+    }
 }

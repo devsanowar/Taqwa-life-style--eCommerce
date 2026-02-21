@@ -1,6 +1,9 @@
 @extends('admin.layouts.app')
 @section('title','Product Variants')
+@push('styles')
+<link href="{{ asset('backend') }}/assets/plugins/datatable/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
+@endpush
 @section('admin_content')
 <div class="page-content">
     <div class="row">
@@ -19,7 +22,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered">
+                        <table class="table table-striped table-bordered" id="variantDataTable">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -56,13 +59,10 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.product.variants.edit', $v->id) }}"
+                                        <a class="action-icon border border-primary text-primary me-2" href="{{ route('admin.product.variants.edit', $v->id) }}"
                                             class="btn btn-sm btn-primary me-1">
-                                            <i class="bx bx-edit"></i>
-                                        </a>
-                                        <button class="btn btn-sm btn-danger deleteBtn" data-id="{{ $v->id }}">
-                                            <i class="bx bx-trash"></i>
-                                        </button>
+                                            <i class="bx bx-edit"></i></a>
+                                        <button class="action-icon border border-danger text-danger deleteBtn" data-id="{{ $v->id }}"><i class="bx bx-trash"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -78,7 +78,15 @@
 @endsection
 
 @push('scripts')
+<script src="{{ asset('backend') }}/assets/plugins/datatable/js/jquery.dataTables.min.js"></script>
+<script src="{{ asset('backend') }}/assets/plugins/datatable/js/dataTables.bootstrap5.min.js"></script>
 <script src="{{ asset('backend') }}/assets/js/sweetalert2.js"></script>
+<script>
+    $(document).ready(function() {
+    $('#variantDataTable').DataTable();
+});
+</script>
+
 <script>
     $(document).on('click','.deleteBtn',function(){
     let id = $(this).data('id');

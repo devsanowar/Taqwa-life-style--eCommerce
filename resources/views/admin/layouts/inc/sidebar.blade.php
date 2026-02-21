@@ -1,11 +1,13 @@
 <div class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
         <div>
-            <img src="{{ asset('backend') }}/assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+            <a href="{{ route('home') }}" target="_blank">
+                <img src="{{ asset($website_setting->website_header_logo ?? 'backend/assets/images/logo-icon.png') }}"
+                class="logo-icon" alt="logo icon">
+            </a>
+
         </div>
-        <div>
-            <h4 class="logo-text">Rukada</h4>
-        </div>
+
         <div class="toggle-icon ms-auto"><i class='bx bx-arrow-back'></i>
         </div>
     </div>
@@ -13,7 +15,7 @@
     <ul class="metismenu" id="menu">
         <li>
             <a href="{{ route('admin.dashboard') }}">
-                <div class="parent-icon"><i class='bx bx-home-alt'></i>
+                <div class="parent-icon"><i class='bx bxs-dashboard'></i>
                 </div>
                 <div class="menu-title">Dashboard</div>
             </a>
@@ -21,12 +23,32 @@
 
         <li>
             <a class="has-arrow" href="javascript:;">
-                <div class="parent-icon"><i class="bx bx-box"></i>
+                <div class="parent-icon"><i class="bx bx-home-alt"></i>
+                </div>
+                <div class="menu-title">Home</div>
+            </a>
+            <ul class="mm-collapse">
+                <li> <a href="{{ route('admin.home.slider.index') }}"><i
+                            class="bx bx-radio-circle"></i>Sliders</a>
+                </li>
+
+                {{-- <li> <a href="{{ route('admin.product.brand.index') }}"><i class="bx bx-radio-circle"></i>Brands</a>
+                </li>
+
+                <li> <a href="{{ route('admin.product.index') }}"><i class="bx bx-radio-circle"></i>Products</a>
+                </li> --}}
+            </ul>
+        </li>
+
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bx bx-cart-alt"></i>
                 </div>
                 <div class="menu-title">Products</div>
             </a>
             <ul class="mm-collapse">
-                <li> <a href="{{ route('admin.product.category.index') }}"><i class="bx bx-radio-circle"></i>Categories</a>
+                <li> <a href="{{ route('admin.product.category.index') }}"><i
+                            class="bx bx-radio-circle"></i>Categories</a>
                 </li>
 
                 <li> <a href="{{ route('admin.product.brand.index') }}"><i class="bx bx-radio-circle"></i>Brands</a>
@@ -44,16 +66,42 @@
                 <div class="menu-title">Variants</div>
             </a>
             <ul class="mm-collapse">
-                <li> <a href="{{ route('admin.product.attribute.index') }}"><i class="bx bx-radio-circle"></i>Attributes</a>
+                <li> <a href="{{ route('admin.product.attribute.index') }}"><i
+                            class="bx bx-radio-circle"></i>Attributes</a>
                 </li>
 
-                <li> <a href="{{ route('admin.product.attribute_value.index') }}"><i class="bx bx-radio-circle"></i>Attribute Values</a>
+                <li> <a href="{{ route('admin.product.attribute_value.index') }}"><i
+                            class="bx bx-radio-circle"></i>Attribute Values</a>
                 </li>
 
-                <li> <a href="{{ route('admin.product.variants.index') }}"><i class="bx bx-radio-circle"></i>Variants</a>
+                <li> <a href="{{ route('admin.product.variants.index') }}"><i
+                            class="bx bx-radio-circle"></i>Variants</a>
                 </li>
 
             </ul>
+        </li>
+
+        <li>
+            <a class="has-arrow" href="javascript:;">
+                <div class="parent-icon"><i class="bx bx-tag-alt"></i>
+                </div>
+                <div class="menu-title">Flash Sales</div>
+            </a>
+            <ul class="mm-collapse">
+                <li> <a href="{{ route('admin.flash_sales.index') }}"><i class="bx bx-radio-circle"></i>Flash Sales</a>
+                </li>
+                <li> <a href="{{ route('admin.flash_sale_items.index') }}"><i class="bx bx-radio-circle"></i>Flash Sale
+                        Items</a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="{{ route('admin.product.review.index') }}">
+                <div class="parent-icon"><i class="bx bx-star"></i>
+                </div>
+                <div class="menu-title">Review</div>
+            </a>
         </li>
 
 

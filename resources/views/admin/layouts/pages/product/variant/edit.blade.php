@@ -10,7 +10,8 @@
                 <div class="card-header">
                     <div class="d-flex justify-content-between align-items-center">
                         <h5>Edit Variant</h5>
-                        <a href="{{ route('admin.product.variants.index') }}" class="btn btn-outline-primary px-5 rounded-0">All Variants</a>
+                        <a href="{{ route('admin.product.variants.index') }}"
+                            class="btn btn-outline-primary px-5 rounded-0">All Variants</a>
                     </div>
                 </div>
 
@@ -27,7 +28,8 @@
                             <div class="col-sm-9">
                                 <select class="form-select" name="product_id" required disabled>
                                     @foreach($products as $p)
-                                        <option value="{{ $p->id }}" {{ $variant->product_id==$p->id?'selected':'' }}>{{ $p->name }}</option>
+                                    <option value="{{ $p->id }}" {{ $variant->product_id==$p->id?'selected':'' }}>{{
+                                        $p->name }}</option>
                                     @endforeach
                                 </select>
                                 <small class="text-muted">Product cannot be changed</small>
@@ -46,7 +48,8 @@
                         <div class="row mb-3">
                             <label class="col-sm-3 col-form-label">Base Price Override</label>
                             <div class="col-sm-9">
-                                <input type="number" step="0.01" class="form-control" name="price_override" value="{{ $variant->price_override }}">
+                                <input type="number" step="0.01" class="form-control" name="price_override"
+                                    value="{{ $variant->price_override }}">
                                 <small class="text-muted">Leave empty to use product base price</small>
                             </div>
                         </div>
@@ -58,32 +61,37 @@
                             <div class="col-sm-9">
                                 @foreach($attr->values as $val)
                                 @php
-                                    $checked = $variant->values->contains('attribute_value_id', $val->id);
-                                    $price = $variant->values->firstWhere('attribute_value_id',$val->id)->price ?? 0;
-                                    $colorImage = $variant->color_images->where('attribute_value_id',$val->id)->first()->image_path ?? null;
+                                    $checked = array_key_exists($val->id, $prices);
+                                $price = $prices[$val->id] ?? 0;
+                                $colorImage = $colorImages[$val->id] ?? null;
+
+
+
                                 @endphp
+
                                 <div class="d-flex align-items-center mb-2 border p-2 rounded">
 
                                     <div class="form-check me-3">
                                         <input class="form-check-input attrCheck" type="checkbox"
-                                            data-value="{{ $val->id }}" data-attr="{{ $attr->id }}"
-                                            {{ $checked?'checked':'' }}>
+                                            data-value="{{ $val->id }}" {{ $checked ? 'checked' : '' }}>
                                         <label class="form-check-label">{{ $val->value }}</label>
                                     </div>
 
                                     {{-- Color Image --}}
-                                    @if($attr->code=='color')
-                                        @if($colorImage)
-                                            <img src="{{ asset('storage/'.$colorImage) }}" alt="" class="me-2" width="50">
-                                        @endif
-                                        <input type="file" class="form-control w-50" name="color_images[{{ $val->id }}]" accept="image/*">
+                                    @if($attr->code == 'color')
+                                    @if($colorImage)
+                                    <img src="{{ asset($colorImage) }}" width="50" class="me-2 border">
+                                    @endif
+                                    <input type="file" class="form-control w-50" name="color_images[{{ $val->id }}]">
                                     @endif
 
                                     {{-- Price Input --}}
-                                    @if($attr->code!='color')
-                                        <input type="hidden" name="prices[{{ $val->id }}]" value="{{ $price }}">
-                                        <input type="number" step="0.01" class="form-control w-25 {{ $checked?'':'d-none' }} priceInput"
-                                            data-hidden="prices[{{ $val->id }}]" placeholder="Extra Price" value="{{ $price }}">
+                                    @if($attr->code != 'color')
+                                    <input type="hidden" name="prices[{{ $val->id }}]" value="{{ $price }}">
+                                    <input type="number" step="0.01"
+                                        class="form-control w-25 priceInput {{ $checked ? '' : 'd-none' }}"
+                                        data-hidden="prices[{{ $val->id }}]" value="{{ $price }}"
+                                        placeholder="Extra Price">
                                     @endif
 
                                 </div>
@@ -125,7 +133,7 @@
 
 @push('scripts')
 <script>
-$(document).on('change','.attrCheck',function(){
+    $(document).on('change','.attrCheck',function(){
     let row = $(this).closest('.d-flex');
     let visible = row.find('.priceInput');
     let hiddenName = visible.data('hidden');
@@ -145,6 +153,22 @@ $(document).on('input','.priceInput',function(){
     $('input[name="'+hiddenName+'"]').val($(this).val());
 });
 
+
+$(document).ready(function(){
+    $('.attrCheck:checked').each(function(){
+        let row = $(this).closest('.d-flex');
+        let visible = row.find('.priceInput');
+        let hiddenName = visible.data('hidden');
+        let hidden = row.find('input[name="'+hiddenName+'"]');
+
+        if(visible.length){
+            visible.removeClass('d-none');
+            if(hidden.length) hidden.val(visible.val());
+        }
+    });
+});
+
+
 $(document).on('submit','#editVariantForm',function(e){
     e.preventDefault();
     let formData = new FormData(this);
@@ -162,6 +186,9 @@ $(document).on('submit','#editVariantForm',function(e){
         success: function(res){
             if(res.status === 'success'){
                 toastr.success(res.message);
+                setTimeout(function(){
+                    window.location.href = "{{ route('admin.product.variants.index') }}";
+                }, 1000);
             }
         },
         error:function(xhr){

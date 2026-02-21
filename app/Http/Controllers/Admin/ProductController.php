@@ -14,7 +14,7 @@ use App\Http\Controllers\Controller;
 class ProductController extends Controller
 {
     public function index() {
-        $products = Product::with(['category', 'brand', 'primaryImage'])->latest()->paginate(10);
+        $products = Product::with(['category', 'brand', 'primaryImage'])->latest()->get();
         return view('admin.layouts.pages.product.index', compact('products'));
     }
 
@@ -29,7 +29,7 @@ class ProductController extends Controller
             'category_id'=>'required|exists:product_categories,id',
             'name'=>'required|unique:products,name',
             'base_price'=>'required|numeric',
-            'images.*'=>'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'images.*'=>'image|mimes:webp,jpeg,png,jpg,gif|max:2048'
         ]);
 
         $product = Product::create([
@@ -85,7 +85,7 @@ class ProductController extends Controller
             'category_id' => 'required|exists:product_categories,id',
             'name' => 'required|unique:products,name,' . $id,
             'base_price' => 'required|numeric',
-            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'nullable|image|mimes:webp,jpeg,png,jpg,gif|max:2048',
             'removed_images' => 'nullable|string',
         ]);
 

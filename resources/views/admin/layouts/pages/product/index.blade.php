@@ -90,11 +90,7 @@
                             </tbody>
                         </table>
 
-                        {{-- Laravel pagination (optional if not using DataTable paging) --}}
-                        <div class="mt-3">
-                            {{ $products->links() }}
-                        </div>
-
+                    
                     </div>
                 </div>
             </div>

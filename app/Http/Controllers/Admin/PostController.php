@@ -54,7 +54,7 @@ class PostController extends Controller
             'user_id' => auth()->id(),
         ]);
 
-        // SEO (optional)
+
         $post->seo()->create([
             'meta_title' => $request->meta_title,
             'meta_keywords' => $request->meta_keywords,

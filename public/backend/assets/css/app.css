@@ -85,19 +85,15 @@ a {
 }
 
 .logo-icon {
-    width: 30px;
+    width: 160px;
 }
 
 .logo-text {
-    font-size: 22px;
-
+    font-size: 18px;
     margin-left: 10px;
-
     margin-bottom: 0;
-
     letter-spacing: 1px;
-
-    color: #5e72e4;
+    color: #000;
 }
 
 .toggle-icon {
@@ -105,7 +101,7 @@ a {
 
     cursor: pointer;
 
-    color: #5e72e4;
+    color: #000;
 }
 
 .topbar {
@@ -316,7 +312,7 @@ a {
 .sidebar-wrapper .metismenu a:active,
 .sidebar-wrapper .metismenu a:focus,
 .sidebar-wrapper .metismenu a:hover {
-    color: #5e72e4;
+    color: #000;
 
     text-decoration: none;
 
@@ -2765,7 +2761,8 @@ form select.error:focus {
 
 .btn-facebook,
 .btn-facebook:hover {
-    box-shadow: 0 2px 2px 0 rgba(59, 89, 152, 0.14),
+    box-shadow:
+        0 2px 2px 0 rgba(59, 89, 152, 0.14),
         0 3px 1px -2px rgba(59, 89, 152, 0.2),
         0 1px 5px 0 rgba(59, 89, 152, 0.12);
 
