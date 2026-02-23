@@ -36,7 +36,7 @@
                                     <td>{{ $key+1 }}</td>
                                     <td>
                                         @if($cat->image)
-                                        <img src="{{ asset('storage/'.$cat->image) }}" width="50">
+                                        <img src="{{ asset($cat->image) }}" width="50">
                                         @else
                                         -
                                         @endif

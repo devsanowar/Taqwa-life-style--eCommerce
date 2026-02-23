@@ -40,8 +40,22 @@ class Product extends Model
         return $this->hasMany(ProductVariant::class);
     }
 
-    // Product search suggestion
+    // NEW: Get all color images through variants
+    public function variantColorImages()
+    {
+        return $this->hasManyThrough(
+            VariantColorImage::class,
+            ProductVariant::class,
+            'id',
+            'variant_id',
+            'id',
+            'id'
+        )->with('attributeValue.attribute');
+    }
+
+
     protected $appends = ['final_price'];
+
     public function getFinalPriceAttribute()
     {
         if ($this->flash_sale_enabled) {

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('profession')->nullable();
             $table->longText('review');
+            $table->string('image')->nullable();
             $table->tinyInteger('rating')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

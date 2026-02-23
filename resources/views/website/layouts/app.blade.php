@@ -5,17 +5,27 @@
     <meta charset="utf-8" />
     <meta name="description" content="Morden Bootstrap HTML5 Template" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ $website_setting->website_title ?? '' }} | @yield('title')</title>
+    @php
+    $siteTitle = $website_setting->website_title ?? config('app.name');
+    @endphp
+
+    <title>
+        @hasSection('title')
+        @yield('title') | {{ $siteTitle }}
+        @else
+        {{ $siteTitle }}
+        @endif
+    </title>
+
+
     @include('website.layouts.inc.style')
+
 
 </head>
 
-<body>
-    <!-- Start preloader -->
+<body id="@yield('page_id')">
 
-    <!-- End preloader -->
 
-    <!-- Start header area -->
     @include('website.layouts.inc.header')
     <!-- End header area -->
 
@@ -76,7 +86,12 @@
         </svg>
     </button>
 
+
+
     @include('website.layouts.inc.script')
+    
+
+    @stack('frontend_scripts')
 </body>
 
 </html>

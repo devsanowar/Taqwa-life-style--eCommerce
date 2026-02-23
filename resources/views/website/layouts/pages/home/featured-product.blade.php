@@ -10,7 +10,7 @@
                     <div class="swiper-slide">
                         <div class="product__items">
                             <div class="product__items--thumbnail">
-                                <a class="product__items--link" href="#">
+                                <a class="product__items--link" href="{{ route('product.details', ['slug' => $product->slug]) }}">
 
                                     <img class="product__items--img product__primary--img"
                                         src="{{ $product->primaryImage ? asset($product->primaryImage->path) : asset('frontend/assets/img/product/product3.png') }}"
@@ -39,7 +39,7 @@
                                     @endif
                                 </span>
                                 <h3 class="product__items--content__title h4">
-                                    <a href="product-details.html">{{ $product->name ?? '' }}</a>
+                                    <a href="{{ route('product.details', ['slug' => $product->slug]) }}">{{ $product->name ?? '' }}</a>
                                 </h3>
                                 @php
                                     $finalPrice = $product->base_price;

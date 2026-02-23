@@ -3702,6 +3702,14 @@ input[type="number"]::-webkit-outer-spin-button {
     width: 100%;
     height: 300px;
 }
+
+#product-details-page .product__items--img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+
 .product__items--action__list {
     margin-right: 0.6rem;
 }
@@ -7835,7 +7843,9 @@ input.quickview__value--number {
 .product__media--preview__items--img {
     width: 100%;
     display: block;
+	height: 550px;
 }
+
 .product__media--view__icon {
     position: absolute;
     top: 2rem;
@@ -7876,6 +7886,11 @@ input.quickview__value--number {
     display: block;
     cursor: pointer;
 }
+
+#product-details-page .product__media--nav__items--img {
+    height: 100px;
+}
+
 @media only screen and (min-width: 768px) {
     .product__details--info {
         font-size: 1.6rem;

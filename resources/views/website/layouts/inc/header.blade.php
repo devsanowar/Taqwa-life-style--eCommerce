@@ -1125,7 +1125,9 @@
     </div>
     <!-- End serch box area -->
 </header>
-@push('scripts')
+
+
+@push('frontend_scripts')
 <script>
 $(document).ready(function() {
     $('.header__search--input').on('keyup', function(){

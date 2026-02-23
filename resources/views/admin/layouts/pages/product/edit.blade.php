@@ -133,35 +133,35 @@
                         </div>
 
                         {{-- Existing Images --}}
-@if($product->images->count())
-<div class="row mb-3">
-    <label class="col-sm-3 col-form-label">Current Images</label>
-    <div class="col-sm-9 d-flex flex-wrap gap-2" id="existingImages">
-        @foreach($product->images as $img)
-        <div class="img-wrap position-relative" data-id="{{ $img->id }}">
-            <img src="{{ asset($img->path) }}" width="80" class="border">
-            <span class="remove-image" data-id="{{ $img->id }}">×</span>
-            <div class="form-check mt-1 text-center">
-                <input type="radio" name="primary_image" value="{{ $img->id }}" class="form-check-input"
-                    {{ $img->is_primary ? 'checked' : '' }}>
-                <label class="form-check-label">Primary</label>
-            </div>
-        </div>
-        @endforeach
-    </div>
-</div>
-@endif
+                        @if($product->images->count())
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Current Images</label>
+                            <div class="col-sm-9 d-flex flex-wrap gap-2" id="existingImages">
+                                @foreach($product->images as $img)
+                                <div class="img-wrap position-relative" data-id="{{ $img->id }}">
+                                    <img src="{{ asset($img->path) }}" width="80" class="border">
+                                    <span class="remove-image" data-id="{{ $img->id }}">×</span>
+                                    <div class="form-check mt-1 text-center">
+                                        <input type="radio" name="primary_image" value="{{ $img->id }}"
+                                            class="form-check-input" {{ $img->is_primary ? 'checked' : '' }}>
+                                        <label class="form-check-label">Primary</label>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
 
-{{-- New Images Upload --}}
-<div class="row mb-3">
-    <label class="col-sm-3 col-form-label">Add Images</label>
-    <div class="col-sm-9">
-        <input type="file" class="form-control" name="images[]" multiple>
-        <small class="text-muted">Upload new images without removing old ones.</small>
-    </div>
-</div>
+                        {{-- New Images Upload --}}
+                        <div class="row mb-3">
+                            <label class="col-sm-3 col-form-label">Add Images</label>
+                            <div class="col-sm-9">
+                                <input type="file" class="form-control" name="images[]" multiple>
+                                <small class="text-muted">Upload new images without removing old ones.</small>
+                            </div>
+                        </div>
 
-<input type="hidden" name="removed_images" id="removed_images">
+                        <input type="hidden" name="removed_images" id="removed_images">
 
 
 
@@ -221,7 +221,7 @@
 
 
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
     let removedImages = [];
 

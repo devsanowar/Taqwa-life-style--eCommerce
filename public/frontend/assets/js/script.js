@@ -367,6 +367,8 @@ function offcanvsSidebar(openTrigger, closeTrigger, wrapper) {
     ),
     activeClassAction(".footer__language--link", ".footer__dropdown--language"),
     activeClassAction(".footer__currency--link", ".footer__dropdown--currency"),
+
+
     offcanvsSidebar(
         ".minicart__open--btn",
         ".minicart__close--btn",
@@ -673,3 +675,4 @@ const newsletterPopup = function () {
         });
 };
 newsletterPopup();
+

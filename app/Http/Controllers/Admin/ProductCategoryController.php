@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Support\Str;
-use App\Helpers\ImageHelper;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use App\Http\Controllers\Controller;
@@ -31,9 +30,12 @@ class ProductCategoryController extends Controller
             'status' => 'required'
         ]);
 
-        $image = null;
         if ($request->hasFile('image')) {
-            $image = ImageHelper::upload($request->file('image'), 'uploads/product_categories', 800, 90);
+            $image = $request->file('image');
+
+            $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+
+            $image->move(public_path('uploads/product_categories'), $imageName);
         }
 
         ProductCategory::create([
@@ -41,7 +43,7 @@ class ProductCategoryController extends Controller
             'slug' => Str::slug($request->name),
             'parent_id' => $request->parent_id,
             'status' => $request->status,
-            'image' => $image
+            'image' => $imageName,
         ]);
 
         return response()->json(['status' => 'success', 'message' => 'Category Created']);
@@ -63,11 +65,27 @@ class ProductCategoryController extends Controller
             'parent_id' => 'nullable|exists:product_categories,id'
         ]);
 
+        if ($request->hasFile('image')) {
+
+            if ($category->image && file_exists(public_path($category->image))) {
+                unlink(public_path($category->image));
+            }
+
+
+            $image = $request->file('image');
+            $imageName = time() . '_' . Str::random(10) . '.' . $image->getClientOriginalExtension();
+
+            $imagePath = 'uploads/product_categories/' . $imageName;
+            $image->move(public_path('uploads/product_categories'), $imageName);
+
+            $category->image = $imagePath;
+        }
+
         $category->update([
             'name' => $request->name,
             'slug' => Str::slug($request->name),
             'parent_id' => $request->parent_id,
-            'status' => $request->status
+            'status' => $request->status,
         ]);
 
         return response()->json([

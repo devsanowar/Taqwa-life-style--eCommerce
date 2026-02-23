@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Product;
 use App\Models\Attribute;
-use App\Helpers\ImageHelper;
 use App\Models\VariantValue;
 use Illuminate\Http\Request;
 use App\Models\AttributeValue;
@@ -74,24 +73,42 @@ class ProductVariantController extends Controller
             }
 
             // Color images
-            if ($request->color_images) {
-                foreach ($request->color_images as $value_id => $file) {
-                    if (!$file) continue;
-                    $attrValue = AttributeValue::find($value_id);
+            if ($request->hasFile('color_images')) {
 
-                    $imagePath = ImageHelper::upload($file, 'uploads/variant_colors', 800, 90);
+                foreach ($request->file('color_images') as $value_id => $file) {
+
+                    if (!$file) continue;
+
+                    $attrValue = AttributeValue::find($value_id);
+                    if (!$attrValue) continue;
+                    $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $destinationPath = public_path('uploads/variant_colors');
+
+                    if (!file_exists($destinationPath)) {
+                        mkdir($destinationPath, 0755, true);
+                    }
+
+                    $file->move($destinationPath, $filename);
+
+                    $imagePath = 'uploads/variant_colors/' . $filename;
 
                     VariantValue::updateOrCreate([
                         'variant_id' => $variant->id,
                         'attribute_value_id' => $value_id
                     ], [
                         'attribute_id' => $attrValue->attribute_id,
-                        'attribute_value_id' => $value_id
                     ]);
 
                     DB::table('variant_color_images')->updateOrInsert(
-                        ['variant_id' => $variant->id, 'attribute_value_id' => $value_id],
-                        ['image_path' => $imagePath]
+                        [
+                            'variant_id' => $variant->id,
+                            'attribute_value_id' => $value_id
+                        ],
+                        [
+                            'image_path' => $imagePath,
+                            'created_at' => now(),
+                            'updated_at' => now(),
+                        ]
                     );
                 }
             }
@@ -181,37 +198,69 @@ class ProductVariantController extends Controller
             }
 
             /* =======================
-             COLOR IMAGE UPDATE
-            ======================= */
+   COLOR IMAGE UPDATE
+======================= */
 
-            if ($request->color_images) {
-                foreach ($request->color_images as $value_id => $file) {
+            if ($request->hasFile('color_images')) {
+
+                foreach ($request->file('color_images') as $value_id => $file) {
+
                     if (!$file) continue;
 
+                    // Get old image
                     $old = DB::table('variant_color_images')
                         ->where('variant_id', $variant->id)
                         ->where('attribute_value_id', $value_id)
                         ->first();
 
+                    // Delete old image if exists
                     if ($old && file_exists(public_path($old->image_path))) {
                         unlink(public_path($old->image_path));
                     }
 
-
+                    // Get attribute value
                     $attrValue = AttributeValue::find($value_id);
-                    $imagePath = ImageHelper::upload($file, 'uploads/variant_colors', 800, 90);
+                    if (!$attrValue) continue;
 
+                    // Generate unique filename
+                    $filename = time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+
+                    // Set destination path
+                    $destinationPath = public_path('uploads/variant_colors');
+
+                    // Create folder if not exists
+                    if (!file_exists($destinationPath)) {
+                        mkdir($destinationPath, 0755, true);
+                    }
+
+                    // Move file
+                    $file->move($destinationPath, $filename);
+
+                    // DB path
+                    $imagePath = 'uploads/variant_colors/' . $filename;
+
+                    // Update pivot table
                     VariantValue::updateOrCreate(
                         [
                             'variant_id' => $variant->id,
                             'attribute_value_id' => $value_id
                         ],
-                        ['attribute_id' => $attrValue->attribute_id]
+                        [
+                            'attribute_id' => $attrValue->attribute_id
+                        ]
                     );
 
+                    // Update image table
                     DB::table('variant_color_images')->updateOrInsert(
-                        ['variant_id' => $variant->id, 'attribute_value_id' => $value_id],
-                        ['image_path' => $imagePath]
+                        [
+                            'variant_id' => $variant->id,
+                            'attribute_value_id' => $value_id
+                        ],
+                        [
+                            'image_path' => $imagePath,
+                            'updated_at' => now(),
+                            'created_at' => now()
+                        ]
                     );
                 }
             }
