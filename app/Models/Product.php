@@ -1,13 +1,12 @@
 <?php
-
 namespace App\Models;
 
 use App\Models\ProductBrand;
-use App\Models\ProductImage;
 use App\Models\ProductCategory;
+use App\Models\ProductImage;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -53,21 +52,36 @@ class Product extends Model
         )->with('attributeValue.attribute');
     }
 
-
     protected $appends = ['final_price'];
+
+    public function calculateDiscount($price)
+    {
+        if (! $this->flash_sale_enabled || ! $this->discount_type || ! $this->discount_value) {
+            return $price;
+        }
+
+        if ($this->discount_type === 'percent') {
+            $price = $price - ($price * $this->discount_value / 100);
+        }
+
+        if ($this->discount_type === 'fixed') {
+            $price = $price - $this->discount_value;
+        }
+
+        return max($price, 0);
+    }
+
+    public function getSortedImagesAttribute()
+    {
+        return $this->images->sortByDesc('is_primary');
+    }
+
 
     public function getFinalPriceAttribute()
     {
-        if ($this->flash_sale_enabled) {
-            if ($this->discount_type === 'percent') {
-                return round($this->base_price - ($this->base_price * $this->discount_value / 100), 2);
-            }
-
-            if ($this->discount_type === 'fixed') {
-                return round($this->base_price - $this->discount_value, 2);
-            }
-        }
-
-        return $this->base_price;
+        return $this->calculateDiscount($this->base_price);
     }
+
+
+
 }

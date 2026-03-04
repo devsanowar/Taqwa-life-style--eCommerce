@@ -10,7 +10,7 @@
                     <div class="swiper-slide">
                         <div class="product__items">
                             <div class="product__items--thumbnail">
-                                <a class="product__items--link" href="#">
+                                <a class="product__items--link" href="{{ route('product.details', ['slug' => $product->slug]) }}"">
 
                                     <img class="product__items--img product__primary--img"
                                         src="{{ $product->primaryImage ? asset($product->primaryImage->path) : asset('frontend/assets/img/product/product3.png') }}"
@@ -39,7 +39,7 @@
                                     @endif
                                 </span>
                                 <h3 class="product__items--content__title h4">
-                                    <a href="product-details.html">{{ $product->name ?? '' }}</a>
+                                    <a href="{{ route('product.details', ['slug' => $product->slug]) }}"">{{ $product->name ?? '' }}</a>
                                 </h3>
                                 @php
                                     $finalPrice = $product->base_price;
@@ -114,7 +114,8 @@
                                 </ul>
                                 <ul class="product__items--action d-flex">
                                     <li class="product__items--action__list">
-                                        <a class="product__items--action__btn add__to--cart" href="cart.html">
+                                        <a href="javascript:void(0)" class="product__items--action__btn add-to-cart-btn"
+                                        data-id="{{ $product->id }}">
                                             <svg class="product__items--action__btn--svg"
                                                 xmlns="http://www.w3.org/2000/svg" width="22.51" height="20.443"
                                                 viewBox="0 0 14.706 13.534">
@@ -140,7 +141,7 @@
                                         </a>
                                     </li>
                                     <li class="product__items--action__list">
-                                        <a class="product__items--action__btn" href="wishlist.html">
+                                        <a class="product__items--action__btn add-to-wishlist" href="javascript:void(0)" data-id="{{ $product->id }}">
                                             <svg class="product__items--action__btn--svg"
                                                 xmlns="http://www.w3.org/2000/svg" width="25.51" height="23.443"
                                                 viewBox="0 0 512 512">

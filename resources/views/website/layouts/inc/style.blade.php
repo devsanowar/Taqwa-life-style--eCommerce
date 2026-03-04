@@ -13,7 +13,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/vendor/bootstrap.min.css') }}" />
 <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css') }}" />
-<!-- Font Awesome Free CDN -->
+<link rel="stylesheet" href="{{ asset('frontend') }}/css/toastr.min.css">
+
 
 @stack('styles')
 
@@ -104,4 +105,68 @@
     .suggest-add-btn:hover {
         background: #926600;
     }
+
+
+
+ /* ========= BASE ========= */
+
+.header__menu--items.style2 {
+    position: relative;
+}
+
+.header__sub--menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    min-width: 240px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-radius: 0;
+}
+
+
+.header__menu--items.style2:hover > .header__sub--menu {
+    display: block;
+}
+
+
+.header__sub--menu__items {
+    position: relative;
+}
+
+
+.header__sub--menu__link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 18px;
+    color: #333;
+    white-space: nowrap;
+}
+
+.header__sub--menu.flyout-menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    background: #fff;
+    min-width: 240px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-shadow: 0 20px 40px rgba(0,0,0,.08);
+}
+
+
+.header__sub--menu__items:hover > .flyout-menu {
+    display: block;
+}
+
+.header__sub--menu__items:hover > .header__sub--menu__link {
+    background: #f8f8f8;
+}
+
 </style>

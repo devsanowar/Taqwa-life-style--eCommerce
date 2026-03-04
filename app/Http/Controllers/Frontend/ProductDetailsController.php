@@ -16,12 +16,7 @@ class ProductDetailsController extends Controller
             'brand',
             'images',
             'primaryImage',
-            'variants.values.attribute',
-            'variantColorImages.attributeValue.attribute'
-        ])
-            ->where('slug', $slug)
-            ->where('status', 1)
-            ->firstOrFail();
+        ])->where('slug', $slug)->where('status', 1)->firstOrFail();
 
 
 

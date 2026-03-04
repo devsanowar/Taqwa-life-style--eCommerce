@@ -18,4 +18,6 @@ class PostCategory extends Model
         return $this->hasMany(PostCategory::class, 'parent_id');
     }
 
+
+
 }

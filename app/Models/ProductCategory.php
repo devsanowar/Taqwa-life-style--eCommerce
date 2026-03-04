@@ -47,4 +47,18 @@ class ProductCategory extends Model
     {
         return $this->hasMany(Product::class, 'category_id');
     }
+
+
+    public function descendantsAndSelfIds(): array
+    {
+        $ids = [$this->id];
+
+        $this->loadMissing('children');
+        foreach ($this->children as $child) {
+            $ids = array_merge($ids, $child->descendantsAndSelfIds());
+        }
+
+        return $ids;
+    }
+
 }

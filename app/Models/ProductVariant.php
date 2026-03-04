@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\VariantValue;
 use Illuminate\Database\Eloquent\Model;
 
 class ProductVariant extends Model
@@ -27,6 +28,11 @@ class ProductVariant extends Model
     public function colorImages()
     {
         return $this->hasMany(VariantColorImage::class, 'variant_id');
+    }
+
+    public function variantValues()
+    {
+        return $this->hasMany(VariantValue::class, 'variant_id');
     }
 
     public function balance()

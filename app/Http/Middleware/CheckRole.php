@@ -16,19 +16,32 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        // লগইন না থাকলে লগইন পেজে পাঠাবে
         if (!Auth::check()) {
-            return redirect('/login');
+            return redirect()->guest(route('login'));
         }
 
-        $user = Auth::user();
-
-        // যদি ইউজারের system_admin রোল $roles এর মধ্যে থাকে
-        if (in_array($user->system_admin, $roles)) {
-            return $next($request); // অনুমোদিত, পরবর্তী middleware বা কন্ট্রোলার চালাবে
+        $userRole = strtolower(Auth::user()->system_admin ?? '');
+        if (empty($roles)) {
+            return $next($request);
         }
 
-        // অনুমোদিত না হলে 403
+
+        $roles = array_map('strtolower', $roles);
+        if (in_array($userRole, $roles, true)) {
+            return $next($request);
+        }
+
+        $homeByRole = [
+            'super_admin' => route('admin.dashboard'),
+            'admin'    => route('admin.dashboard'),
+            'customer' => route('customer.dashboard'),
+        ];
+
+        if (isset($homeByRole[$userRole])) {
+            return redirect($homeByRole[$userRole])
+                ->with('error', 'Unauthorized for this section.');
+        }
+
         abort(403, 'Unauthorized');
     }
 }

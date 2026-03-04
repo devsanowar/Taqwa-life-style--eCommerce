@@ -2946,46 +2946,41 @@ body.overlay__active::before {
     display: block;
     padding: 10px 0;
 }
-.mega__menu--items {
-    position: static;
+
+
+.header__sub--menu {
+    top: calc(100% + 2px);
 }
-.header__mega--menu {
-    position: absolute;
-    z-index: 9;
-    top: 100%;
-    left: 0;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    width: 100%;
-    margin: 0;
-    margin-top: 20px;
-    padding: 25px;
-    list-style: none;
-    -webkit-transition: var(--transition);
-    transition: var(--transition);
-    visibility: hidden;
-    opacity: 0;
-    background-color: var(--white-color);
-    -webkit-box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    border-radius: 10px;
+
+
+.header__sub--menu.flyout-menu {
+    top: 0;
+    left: 100%;
 }
-.header__mega--menu__li {
-    padding: 3px 15px;
-    width: 25%;
+
+
+.header__menu--items.style2:hover > .header__sub--menu {
+    display: block;
 }
-.header__mega--subtitle {
-    font-weight: 600;
-    font-size: 1.6rem;
-    margin-bottom: 15px;
+
+.header__sub--menu__items:hover > .flyout-menu {
+    display: block;
 }
-.header__mega--sub__menu--title {
-    font-size: 1.5rem;
-    padding: 8px 0;
+
+.header__sub--menu__link {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 15px 15px;
+	color: #333;
+	text-decoration: none;
 }
+
+
+.header__sub--menu__items > .header__sub--menu__link i {
+    font-size: 16px;
+}
+
 .offCanvas__minicart {
     position: fixed;
     width: 310px;
@@ -3080,7 +3075,7 @@ body.overlay__active::before {
 }
 @media only screen and (min-width: 480px) {
     .minicart__thumb {
-        width: 120px;
+        width: 75px;
     }
 }
 .minicart__text {
@@ -3741,15 +3736,15 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 }
 @media only screen and (min-width: 1200px) {
-    .product__items--action__btn {
-        padding: 0 0.7rem;
-        height: 4.2rem;
-        line-height: 3.8rem;
-    }
+.product__items--action__btn {
+	padding: 0 0.4rem;
+	height: 4.2rem;
+	line-height: 3.8rem;
+}
 }
 @media only screen and (min-width: 1366px) {
     .product__items--action__btn {
-        padding: 0 0.7rem;
+        padding: 0 0.4rem;
         height: 4.4rem;
         line-height: 4rem;
     }
@@ -3795,7 +3790,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 @media only screen and (max-width: 1365px) {
     .product__items--action__btn--svg {
-        width: 2rem;
+        width: 1.8rem;
     }
 }
 .product__items--action__btn:hover {

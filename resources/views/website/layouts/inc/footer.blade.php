@@ -140,54 +140,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="footer__widget footer__widget--width">
-                    <h2 class="footer__widget--title text-ofwhite h3">
-                        Instagram
-                        <button class="footer__widget--button" aria-label="footer widget button">
-                            <svg class="footer__widget--title__arrowdown--icon" xmlns="http://www.w3.org/2000/svg"
-                                width="12.355" height="8.394" viewBox="0 0 10.355 6.394">
-                                <path d="M15.138,8.59l-3.961,3.952L7.217,8.59,6,9.807l5.178,5.178,5.178-5.178Z"
-                                    transform="translate(-6 -8.59)" fill="currentColor"></path>
-                            </svg>
-                        </button>
-                    </h2>
-                    <div class="footer__instagram footer__widget--inner">
-                        <div class="footer__instagram--list d-flex">
-                            <div class="instagram__thumbnail">
-                                <a class="instagram__thumbnail--img" target="_blank"
-                                    href="https://www.instagram.com/p/CZkF3TLBTT7"><img
-                                        src="{{ asset('frontend') }}/assets/img/other/instagram1.webp" alt="instagram" /></a>
-                            </div>
-                            <div class="instagram__thumbnail">
-                                <a class="instagram__thumbnail--img" target="_blank"
-                                    href="https://www.instagram.com/p/CZkF60sBxhN"><img
-                                        src="{{ asset('frontend') }}/assets/img/other/instagram2.webp" alt="instagram" /></a>
-                            </div>
-                            <div class="instagram__thumbnail">
-                                <a class="instagram__thumbnail--img" target="_blank"
-                                    href="https://www.instagram.com/p/CZkF90ZB6HG"><img
-                                        src="{{ asset('frontend') }}/assets/img/other/instagram3.webp" alt="instagram" /></a>
-                            </div>
-                        </div>
-                        <div class="footer__instagram--list d-flex">
-                            <div class="instagram__thumbnail">
-                                <a class="instagram__thumbnail--img" target="_blank"
-                                    href="https://www.instagram.com/p/CZkGAe6BQeu"><img
-                                        src="{{ asset('frontend') }}/assets/img/other/instagram4.webp" alt="instagram" /></a>
-                            </div>
-                            <div class="instagram__thumbnail">
-                                <a class="instagram__thumbnail--img" target="_blank"
-                                    href="https://www.instagram.com/p/CZkGCWcBbv9"><img
-                                        src="{{ asset('frontend') }}/assets/img/other/instagram5.webp" alt="instagram" /></a>
-                            </div>
-                            <div class="instagram__thumbnail">
-                                <a class="instagram__thumbnail--img" target="_blank"
-                                    href="https://www.instagram.com/p/CZkGFDMhoid"><img
-                                        src="{{ asset('frontend') }}/assets/img/other/instagram6.webp" alt="instagram" /></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="footer__widget footer__widget--width">
                     <h2 class="footer__widget--title text-ofwhite h3">
                         Newsletter

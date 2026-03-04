@@ -21,7 +21,7 @@ use App\Http\Controllers\Admin\WebsiteSettingController;
 use App\Http\Controllers\InventoryController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->middleware(['auth', 'verified'])->group(function () {
+Route::prefix('admin')->middleware(['role:admin,super_admin'])->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('admin.dashboard');

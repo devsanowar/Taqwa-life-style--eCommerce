@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const galleryMain = new Swiper(galleryMainEl, {
             spaceBetween: 10,
-            loop: false,             
+            loop: false,
             navigation: {
                 nextEl: '.swiper-button-next',
                 prevEl: '.swiper-button-prev',

@@ -8,7 +8,7 @@ use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductReview;
 use App\Models\Slider;
-use Illuminate\Http\Request;
+
 
 class HomeController extends Controller
 {
@@ -53,9 +53,18 @@ class HomeController extends Controller
             ->get();
 
 
-        $categories = ProductCategory::where('status', 1)
-            ->orderBy('sort_order', 'asc')
-            ->get();
+        // $categories = ProductCategory::where('status', 1)
+        //     ->orderBy('sort_order', 'asc')
+        //     ->get();
+
+$homeCategories  = ProductCategory::where('status', 1)
+    ->whereNotNull('parent_id')
+    ->orderBy('sort_order','asc')
+    ->get();
+
+
+
+
 
         $productReviews = ProductReview::where('status', 1)->latest()->get();
 
@@ -67,7 +76,7 @@ class HomeController extends Controller
 
         return view('website.layouts.pages.home', compact(
             'sliders',
-            'categories',
+            'homeCategories',
             'featuredProducts',
             'products',
             'flashSallingProducts',

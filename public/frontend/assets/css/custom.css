@@ -1,0 +1,239 @@
+
+input[name="color"]:checked+.variant__color--value {
+    border-color: #000;
+    box-shadow: 0 0 0 2px var(--secondary-color);
+}
+
+ /* ---------------------------
+   Scoped Bootstrap Dashboard
+   --------------------------- */
+.bs-dashboard.user-profile-section {
+  background: #FFFFFF;
+  padding: 4rem 3.6rem;
+  border-radius: 1rem;
+}
+
+.bs-dashboard .dashboard-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.bs-dashboard .dashboard-title {
+  font-family: "Inter", sans-serif;
+  font-size: 2.2rem;
+}
+
+/* Switch (Bootstrap form-switch) */
+.bs-dashboard .form-switch .form-check-input {
+  width: 3.25rem;
+  height: 1.75rem;
+  cursor: pointer;
+  border: 1px solid #c0c0c0;
+  box-shadow: none;
+}
+.bs-dashboard .form-switch .form-check-input:checked {
+  background-color: #AE1C9A;
+  border-color: #AE1C9A;
+}
+
+/* Layout */
+.bs-dashboard .user-dashboard {
+  display: flex;
+  align-items: flex-start;
+  gap: 3rem;
+}
+
+/* Left nav */
+.bs-dashboard .user-dashboard-nav {
+  width: 23.1rem;
+  border-right: 2px solid rgba(174, 28, 154, 0.08);
+  padding: 0 0 2rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.bs-dashboard .user-dashboard-nav .nav-link {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  color: #797979;
+  cursor: pointer;
+}
+
+.bs-dashboard .user-dashboard-nav .nav-link.active {
+  background: transparent;
+}
+
+.bs-dashboard .user-dashboard-nav .nav-link.active .text {
+  color: #AE1C9A;
+  font-weight: 600;
+  transform: translateX(5px);
+}
+
+/* Content */
+.bs-dashboard .nav-content {
+  width: 100%;
+}
+
+.bs-dashboard .paragraph {
+  color: #232532;
+}
+
+.bs-dashboard .heading {
+  font-size: 2.4rem;
+}
+
+/* Info block */
+.bs-dashboard .info-section {
+  padding: 4rem;
+  background: rgba(174, 28, 154, 0.08);
+  border-radius: 0.5rem;
+}
+
+/* Simple form styling inside dashboard only */
+.bs-dashboard .bs-form-item {
+  margin-bottom: 1.2rem;
+}
+.bs-dashboard .form-label {
+  color: #797979;
+  font-size: 1.5rem;
+  margin-bottom: .5rem;
+}
+.bs-dashboard .form-control {
+  box-shadow: none;
+  border: 1px solid rgb(232, 232, 232);
+  border-radius: 0.5rem;
+  padding: 1.1rem 1.2rem;
+}
+
+.bs-dashboard .bs-form-actions {
+  margin-top: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .bs-dashboard.user-profile-section {
+    padding: 3rem 2rem;
+  }
+
+  .bs-dashboard .user-dashboard {
+    flex-direction: column;
+  }
+
+  .bs-dashboard .user-dashboard-nav {
+    width: 100%;
+    border-right: none;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .bs-dashboard .dashboard-switch .text {
+    display: none;
+  }
+
+  .bs-dashboard .info-section {
+    padding: 2rem;
+  }
+}
+
+
+/* Summary cards */
+.bs-dashboard .bs-stat-card{
+  display:flex;
+  align-items:center;
+  gap:1.4rem;
+  padding:2rem;
+  border-radius:1rem;
+  background: rgba(174, 28, 154, 0.08);
+  border: 1px solid rgba(174, 28, 154, 0.12);
+  transition: .2s ease;
+}
+.bs-dashboard .bs-stat-card:hover{
+  transform: translateY(-2px);
+  background: rgba(174, 28, 154, 0.12);
+}
+
+.bs-dashboard .bs-stat-icon{
+  width:4.6rem;
+  height:4.6rem;
+  border-radius: 0.9rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#fff;
+  color:#AE1C9A;
+  font-size:1.8rem;
+  flex: 0 0 auto;
+}
+
+.bs-dashboard .bs-stat-title{
+  font-size:1.4rem;
+  color:#797979;
+}
+.bs-dashboard .bs-stat-value{
+  font-size:2.6rem;
+  color:#232532;
+}
+
+/* Variants */
+.bs-dashboard .bs-stat-card--success .bs-stat-icon{ color:#27AE60; }
+.bs-dashboard .bs-stat-card--brand .bs-stat-icon{ color:#AE1C9A; }
+
+/* Panel */
+.bs-dashboard .bs-panel{
+  padding: 2rem;
+  border-radius: 1rem;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+}
+.bs-dashboard .bs-panel-title{
+  font-size: 1.9rem;
+  color:#232532;
+}
+
+/* Table */
+.bs-dashboard .bs-table thead th{
+  color:#797979;
+  font-weight:600;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+.bs-dashboard .bs-table tbody td{
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  padding-top:1.2rem;
+  padding-bottom:1.2rem;
+}
+
+/* Badge (custom) */
+.bs-dashboard .bs-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:.35rem .8rem;
+  border-radius: 99px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.bs-dashboard .bs-badge--success{ background: rgba(39, 174, 96, .12); color:#27AE60; }
+.bs-dashboard .bs-badge--danger{  background: rgba(235, 87, 87, .12); color:#EB5757; }
+.bs-dashboard .bs-badge--info{    background: rgba(47, 128, 237, .12); color:#2F80ED; }
+.bs-dashboard .bs-badge--warning{ background: rgba(242, 153, 74, .12); color:#F2994A; }
+
+/* Action link */
+.bs-dashboard .bs-link-btn{
+  color:#AE1C9A;
+  font-weight:600;
+  text-decoration:none;
+}
+.bs-dashboard .bs-link-btn:hover{ text-decoration: underline; }
+
+/* Mobile spacing */
+@media (max-width: 1023px){
+  .bs-dashboard .bs-panel{ padding: 1.5rem; }
+}
+

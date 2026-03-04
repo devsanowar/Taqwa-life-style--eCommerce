@@ -9,12 +9,12 @@
         <!-- Categories Grid -->
         <div class="cat-grid">
 
-            @foreach($categories as $key => $category)
+            @foreach($homeCategories as $key => $category)
 
-            <a href="#" class="cat-card" data-category="gold-ring">
+           <a href="{{ route('category.page', ['slug' => $category->slug]) }}" class="cat-card">
                 <div class="cat-icon-wrap">
                     <img src="{{ $category->image ? asset($category->image) : asset('frontend/assets/img/categories/fashion.png') }}"
-                        alt="Gold Ring" class="cat-icon" />
+                        alt="{{ $category->name }}" class="cat-icon" />
                 </div>
                 <span class="cat-label">{{ $category->name ?? '' }}</span>
             </a>
